@@ -7,8 +7,8 @@ node_modules/
 .env.*.local
 
 # Test results and reports
-# playwright-report/ - Included to demonstrate 100% pass rate
-# allure-results/ - Included to demonstrate 100% pass rate
+playwright-report/
+allure-results/
 allure-report/
 test-results/
 

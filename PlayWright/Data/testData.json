@@ -86,5 +86,36 @@
     "ground": "ground",
     "nextDay": "nextday",
     "secondDay": "secondday"
+  },
+  "leftSidebar": {
+    "categories": [
+      "Books",
+      "Computers",
+      "Electronics",
+      "Apparel & Shoes",
+      "Digital downloads",
+      "Jewelry",
+      "Gift Cards"
+    ],
+    "manufacturers": [
+      "Tricentis"
+    ],
+    "popularTags": [
+      "apparel",
+      "awesome",
+      "book",
+      "camera",
+      "cell",
+      "compact",
+      "computer",
+      "cool",
+      "digital",
+      "jeans",
+      "jewelry",
+      "nice",
+      "shirt",
+      "shoes",
+      "TCP"
+    ]
   }
 }

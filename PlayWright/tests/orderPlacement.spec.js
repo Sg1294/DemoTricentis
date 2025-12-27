@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { HomePage, LoginPage, RegisterPage, ProductPage, CartPage, CheckoutPage } = require('../Pages');
-const { loadTestData, generateUniqueEmail, comparePrices, roundToTwoDecimals, logStep, logAction, logAssertion } = require('../utils/helpers');
+const { loadTestData, generateUniqueEmail, comparePrices, roundToTwoDecimals, logStep, logAssertion } = require('../utils/helpers');
 
 // Load test data
 const testData = loadTestData();
@@ -26,6 +26,74 @@ test.describe('Place Order with Multiple Products', () => {
     checkoutPage = new CheckoutPage(page);
 
     await homePage.goToHomePage();
+
+    // Verify complete header UI is stable and visible
+    const headerUI = await homePage.verifyCompleteHeaderUI();
+    expect(headerUI.logo).toBeTruthy();
+    expect(headerUI.searchBox.allVisible).toBeTruthy();
+    expect(headerUI.shoppingCart).toBeTruthy();
+    expect(headerUI.headerLinks).toBeTruthy();
+    expect(headerUI.allHeaderElementsVisible).toBeTruthy();
+    logAssertion('Header logo visible on homepage', headerUI.logo);
+    logAssertion('Search box elements visible (input, button)', headerUI.searchBox.allVisible);
+    logAssertion('Shopping cart flyout exists in header', headerUI.shoppingCart);
+    logAssertion('Header links wrapper visible', headerUI.headerLinks);
+    logAssertion('All header UI elements verified and visible', headerUI.allHeaderElementsVisible);
+
+    // Verify guest user header (Register/Login links visible)
+    const guestHeader = await homePage.verifyGuestUserHeader();
+    expect(guestHeader.registerLinkVisible).toBeTruthy();
+    expect(guestHeader.loginLinkVisible).toBeTruthy();
+    expect(guestHeader.isGuestMode).toBeTruthy();
+    logAssertion('Register link visible in guest header', guestHeader.registerLinkVisible);
+    logAssertion('Login link visible in guest header', guestHeader.loginLinkVisible);
+    logAssertion('Guest mode header verified (not logged in)', guestHeader.isGuestMode);
+
+    // Verify header menu is visible on homepage
+    const headerMenuExists = await homePage.verifyHeaderMenuExists();
+    expect(headerMenuExists).toBeTruthy();
+    logAssertion('Header navigation menu visible on homepage', headerMenuExists);
+
+    // Verify left sidebar exists
+    const leftSidebarExists = await homePage.verifyLeftSidebarExists();
+    expect(leftSidebarExists).toBeTruthy();
+    logAssertion('Left sidebar visible on homepage', leftSidebarExists);
+
+    // Verify Categories block
+    const categoryBlock = await homePage.verifyCategoryNavigationBlock();
+    expect(categoryBlock.isValid).toBeTruthy();
+    logAssertion('Category navigation block visible and valid', categoryBlock.isValid, `Title: "${categoryBlock.titleText}"`);
+
+    // Verify all category items match expected data
+    const categoryVerification = await homePage.verifyCategoryNavigationItems(testData.leftSidebar.categories);
+    expect(categoryVerification.countMatches).toBeTruthy();
+    expect(categoryVerification.allCategoriesPresent).toBeTruthy();
+    logAssertion('Category count matches expected', categoryVerification.countMatches, `Expected: ${categoryVerification.expectedCount}, Actual: ${categoryVerification.actualCount}`);
+    logAssertion('All expected categories present', categoryVerification.allCategoriesPresent, `Categories: ${categoryVerification.categoryNames.join(', ')}`);
+
+    // Verify Manufacturers block
+    const manufacturerBlock = await homePage.verifyManufacturerNavigationBlock();
+    expect(manufacturerBlock.isValid).toBeTruthy();
+    logAssertion('Manufacturer navigation block visible and valid', manufacturerBlock.isValid, `Title: "${manufacturerBlock.titleText}"`);
+
+    // Verify all manufacturer items match expected data
+    const manufacturerVerification = await homePage.verifyManufacturerNavigationItems(testData.leftSidebar.manufacturers);
+    expect(manufacturerVerification.countMatches).toBeTruthy();
+    expect(manufacturerVerification.allManufacturersPresent).toBeTruthy();
+    logAssertion('Manufacturer count matches expected', manufacturerVerification.countMatches, `Expected: ${manufacturerVerification.expectedCount}, Actual: ${manufacturerVerification.actualCount}`);
+    logAssertion('All expected manufacturers present', manufacturerVerification.allManufacturersPresent, `Manufacturers: ${manufacturerVerification.manufacturerNames.join(', ')}`);
+
+    // Verify Popular Tags block
+    const tagsBlock = await homePage.verifyPopularTagsBlock();
+    expect(tagsBlock.isValid).toBeTruthy();
+    logAssertion('Popular tags block visible and valid', tagsBlock.isValid, `Title: "${tagsBlock.titleText}"`);
+
+    // Verify all popular tags match expected data
+    const tagsVerification = await homePage.verifyPopularTags(testData.leftSidebar.popularTags);
+    expect(tagsVerification.countMatches).toBeTruthy();
+    expect(tagsVerification.allTagsPresent).toBeTruthy();
+    logAssertion('Popular tags count matches expected', tagsVerification.countMatches, `Expected: ${tagsVerification.expectedCount}, Actual: ${tagsVerification.actualCount}`);
+    logAssertion('All expected tags present', tagsVerification.allTagsPresent, `Tags: ${tagsVerification.tagNames.join(', ')}`);
   });
 
   test('TC001 - Register new user and place order with multiple products', async ({ page }) => {
@@ -37,39 +105,67 @@ test.describe('Place Order with Multiple Products', () => {
 
     // Step 1: Register new user
     await test.step('Register new user', async () => {
-      logAction('Clicking Register button');
       await homePage.clickRegister();
-      logAction('Filling registration form', `Email: ${uniqueEmail}`);
       await registerPage.registerUser(userData);
-      logAction('Verifying registration success');
       const isRegistered = await registerPage.isRegistrationSuccessful();
       expect(isRegistered).toBeTruthy();
       logAssertion('User registration successful', isRegistered);
-      logAction('Clicking Continue button');
       await registerPage.clickContinue();
+
+      // Verify logged-in user header elements are now visible
+      const loggedInHeader = await homePage.verifyLoggedInUserHeader(uniqueEmail);
+      expect(loggedInHeader.userAccountLinkVisible).toBeTruthy();
+      expect(loggedInHeader.logoutLinkVisible).toBeTruthy();
+      expect(loggedInHeader.shoppingCartLinkVisible).toBeTruthy();
+      expect(loggedInHeader.wishlistLinkVisible).toBeTruthy();
+      expect(loggedInHeader.userEmail).toBe(uniqueEmail);
+      expect(loggedInHeader.emailMatches).toBeTruthy();
+      expect(loggedInHeader.allLoggedInElementsVisible).toBeTruthy();
+      logAssertion('User account link visible in header', loggedInHeader.userAccountLinkVisible, `Email: ${loggedInHeader.userEmail}`);
+      logAssertion('Logout link visible in header', loggedInHeader.logoutLinkVisible);
+      logAssertion('Shopping cart link visible in logged-in header', loggedInHeader.shoppingCartLinkVisible, `Cart Qty: ${loggedInHeader.cartQuantity}`);
+      logAssertion('Wishlist link visible in logged-in header', loggedInHeader.wishlistLinkVisible, `Wishlist Qty: ${loggedInHeader.wishlistQuantity}`);
+      logAssertion('User email matches expected email', loggedInHeader.emailMatches, `Expected: ${uniqueEmail}, Actual: ${loggedInHeader.userEmail}`);
+      logAssertion('All logged-in header elements verified and visible', loggedInHeader.allLoggedInElementsVisible);
+
       logStep('Register new user');
     });
 
     // Step 2: Add multiple products to cart
     const productsToAdd = testData.testProducts.multipleProducts;
     let expectedCartTotal = 0;
+    let expectedCartItemCount = 0;
 
     await test.step('Add multiple products to cart', async () => {
       for (const product of productsToAdd) {
-        logAction('Navigating to product', `URL: ${product.url}`);
         await productPage.goToProductDetail(product.url);
 
-        logAction('Fetching product price');
+        // Verify header UI is stable on product page
+        const headerUI = await productPage.verifyCompleteHeaderUI();
+        expect(headerUI.allHeaderElementsVisible).toBeTruthy();
+        logAssertion('Header UI verified on product page', headerUI.allHeaderElementsVisible, `Logo: ${headerUI.logo}, Search: ${headerUI.searchBox.allVisible}, Cart: ${headerUI.shoppingCart}, Links: ${headerUI.headerLinks}`);
+
+        // Verify header menu is visible on product page
+        const headerMenuOnProduct = await productPage.verifyHeaderMenuExists();
+        expect(headerMenuOnProduct).toBeTruthy();
+        logAssertion('Header navigation menu visible on product page', headerMenuOnProduct);
+
         const actualPrice = await productPage.getProductDetailPrice();
         expect(comparePrices(actualPrice, product.price)).toBeTruthy();
         logAssertion(`Product price match (Expected: ${product.price}, Actual: ${actualPrice})`, comparePrices(actualPrice, product.price));
 
-        logAction('Setting quantity', `Quantity: ${product.quantity}`);
+        // Get cart quantity before adding
+        const cartQtyBefore = await productPage.getHeaderCartQuantity();
+
         await productPage.setQuantity(product.quantity);
-        logAction('Adding product to cart');
         await productPage.addToCartFromDetailPage();
-        logAction('Closing notification');
         await productPage.closeNotification();
+
+        // Verify cart quantity increased after adding
+        expectedCartItemCount += product.quantity;
+        const cartQtyVerification = await productPage.verifyHeaderCartQuantity(expectedCartItemCount);
+        expect(cartQtyVerification.matches).toBeTruthy();
+        logAssertion(`Cart quantity updated correctly`, cartQtyVerification.matches, `Expected: ${cartQtyVerification.expectedQuantity}, Actual: ${cartQtyVerification.actualQuantity}`);
 
         expectedCartTotal += product.price * product.quantity;
       }
@@ -78,10 +174,18 @@ test.describe('Place Order with Multiple Products', () => {
 
     // Step 3: Verify cart contents and price calculations
     await test.step('Verify cart contents and calculations', async () => {
-      logAction('Navigating to cart page');
       await cartPage.goToCart();
 
-      logAction('Fetching cart items');
+      // Verify header UI is stable on cart page
+      const headerUI = await cartPage.verifyCompleteHeaderUI();
+      expect(headerUI.allHeaderElementsVisible).toBeTruthy();
+      logAssertion('Header UI verified on cart page', headerUI.allHeaderElementsVisible, `Logo: ${headerUI.logo}, Search: ${headerUI.searchBox.allVisible}, Cart: ${headerUI.shoppingCart}, Links: ${headerUI.headerLinks}`);
+
+      // Verify header menu is visible on cart page
+      const headerMenuOnCart = await cartPage.verifyHeaderMenuExists();
+      expect(headerMenuOnCart).toBeTruthy();
+      logAssertion('Header navigation menu visible on cart page', headerMenuOnCart);
+
       const cartItems = await cartPage.getCartItems();
       expect(cartItems.length).toBe(productsToAdd.length);
       logAssertion(`Cart contains expected items (Count: ${cartItems.length})`, cartItems.length === productsToAdd.length);
@@ -93,12 +197,10 @@ test.describe('Place Order with Multiple Products', () => {
         logAssertion(`Item ${i + 1} subtotal calculation`, comparePrices(item.subtotal, expectedSubtotal), `Expected: ${expectedSubtotal}, Actual: ${item.subtotal}`);
       }
 
-      logAction('Fetching order subtotal');
       const orderSubtotal = await cartPage.getOrderSubtotal();
       expect(comparePrices(orderSubtotal, expectedCartTotal)).toBeTruthy();
       logAssertion(`Order subtotal verification`, comparePrices(orderSubtotal, expectedCartTotal), `Expected: ${expectedCartTotal}, Actual: ${orderSubtotal}`);
 
-      logAction('Verifying price calculations');
       const priceVerification = await cartPage.verifyPriceCalculations();
       expect(priceVerification.subtotalMatch).toBeTruthy();
       logAssertion('Price calculations verified', priceVerification.subtotalMatch);
@@ -107,7 +209,6 @@ test.describe('Place Order with Multiple Products', () => {
 
     // Step 4: Complete checkout
     await test.step('Complete checkout process', async () => {
-      logAction('Proceeding to checkout');
       await cartPage.proceedToCheckout();
 
       const billingAddress = {
@@ -116,10 +217,8 @@ test.describe('Place Order with Multiple Products', () => {
       };
 
       try {
-        logAction('Completing checkout', 'Ground shipping, COD payment');
         await checkoutPage.completeCheckout(billingAddress, 'ground', 'cod');
 
-        logAction('Verifying order confirmation');
         const isOrderConfirmed = await checkoutPage.isOrderConfirmed();
         expect(isOrderConfirmed).toBeTruthy();
         logAssertion('Order confirmed successfully', isOrderConfirmed);
@@ -245,6 +344,22 @@ test.describe('Place Order with Multiple Products', () => {
 
       const isLoggedIn = await loginPage.isLoginSuccessful();
       expect(isLoggedIn).toBeTruthy();
+
+      // Verify logged-in user header elements are now visible
+      const loggedInHeader = await homePage.verifyLoggedInUserHeader(email);
+      expect(loggedInHeader.userAccountLinkVisible).toBeTruthy();
+      expect(loggedInHeader.logoutLinkVisible).toBeTruthy();
+      expect(loggedInHeader.shoppingCartLinkVisible).toBeTruthy();
+      expect(loggedInHeader.wishlistLinkVisible).toBeTruthy();
+      expect(loggedInHeader.userEmail).toBe(email);
+      expect(loggedInHeader.emailMatches).toBeTruthy();
+      expect(loggedInHeader.allLoggedInElementsVisible).toBeTruthy();
+      logAssertion('User account link visible in header', loggedInHeader.userAccountLinkVisible, `Email: ${loggedInHeader.userEmail}`);
+      logAssertion('Logout link visible in header', loggedInHeader.logoutLinkVisible);
+      logAssertion('Shopping cart link visible in logged-in header', loggedInHeader.shoppingCartLinkVisible, `Cart Qty: ${loggedInHeader.cartQuantity}`);
+      logAssertion('Wishlist link visible in logged-in header', loggedInHeader.wishlistLinkVisible, `Wishlist Qty: ${loggedInHeader.wishlistQuantity}`);
+      logAssertion('User email matches expected email', loggedInHeader.emailMatches, `Expected: ${email}, Actual: ${loggedInHeader.userEmail}`);
+      logAssertion('All logged-in header elements verified and visible', loggedInHeader.allLoggedInElementsVisible);
     });
 
     const products = testData.testProducts.multipleProducts;
@@ -358,10 +473,87 @@ test.describe('Cart Operations', () => {
     checkoutPage = new CheckoutPage(page);
 
     await homePage.goToHomePage();
+
+    // Verify complete header UI is stable and visible
+    const headerUI = await homePage.verifyCompleteHeaderUI();
+    expect(headerUI.logo).toBeTruthy();
+    expect(headerUI.searchBox.allVisible).toBeTruthy();
+    expect(headerUI.shoppingCart).toBeTruthy();
+    expect(headerUI.headerLinks).toBeTruthy();
+    expect(headerUI.allHeaderElementsVisible).toBeTruthy();
+    logAssertion('Header logo visible on homepage', headerUI.logo);
+    logAssertion('Search box elements visible (input, button)', headerUI.searchBox.allVisible);
+    logAssertion('Shopping cart flyout exists in header', headerUI.shoppingCart);
+    logAssertion('Header links wrapper visible', headerUI.headerLinks);
+    logAssertion('All header UI elements verified and visible', headerUI.allHeaderElementsVisible);
+
+    // Verify guest user header (Register/Login links visible)
+    const guestHeader = await homePage.verifyGuestUserHeader();
+    expect(guestHeader.registerLinkVisible).toBeTruthy();
+    expect(guestHeader.loginLinkVisible).toBeTruthy();
+    expect(guestHeader.isGuestMode).toBeTruthy();
+    logAssertion('Register link visible in guest header', guestHeader.registerLinkVisible);
+    logAssertion('Login link visible in guest header', guestHeader.loginLinkVisible);
+    logAssertion('Guest mode header verified (not logged in)', guestHeader.isGuestMode);
+
+    // Verify header menu is visible on homepage
+    const headerMenuExists = await homePage.verifyHeaderMenuExists();
+    expect(headerMenuExists).toBeTruthy();
+    logAssertion('Header navigation menu visible on homepage', headerMenuExists);
+
+    // Verify left sidebar exists
+    const leftSidebarExists = await homePage.verifyLeftSidebarExists();
+    expect(leftSidebarExists).toBeTruthy();
+    logAssertion('Left sidebar visible on homepage', leftSidebarExists);
+
+    // Verify Categories block
+    const categoryBlock = await homePage.verifyCategoryNavigationBlock();
+    expect(categoryBlock.isValid).toBeTruthy();
+    logAssertion('Category navigation block visible and valid', categoryBlock.isValid, `Title: "${categoryBlock.titleText}"`);
+
+    // Verify all category items match expected data
+    const categoryVerification = await homePage.verifyCategoryNavigationItems(testData.leftSidebar.categories);
+    expect(categoryVerification.countMatches).toBeTruthy();
+    expect(categoryVerification.allCategoriesPresent).toBeTruthy();
+    logAssertion('Category count matches expected', categoryVerification.countMatches, `Expected: ${categoryVerification.expectedCount}, Actual: ${categoryVerification.actualCount}`);
+    logAssertion('All expected categories present', categoryVerification.allCategoriesPresent, `Categories: ${categoryVerification.categoryNames.join(', ')}`);
+
+    // Verify Manufacturers block
+    const manufacturerBlock = await homePage.verifyManufacturerNavigationBlock();
+    expect(manufacturerBlock.isValid).toBeTruthy();
+    logAssertion('Manufacturer navigation block visible and valid', manufacturerBlock.isValid, `Title: "${manufacturerBlock.titleText}"`);
+
+    // Verify all manufacturer items match expected data
+    const manufacturerVerification = await homePage.verifyManufacturerNavigationItems(testData.leftSidebar.manufacturers);
+    expect(manufacturerVerification.countMatches).toBeTruthy();
+    expect(manufacturerVerification.allManufacturersPresent).toBeTruthy();
+    logAssertion('Manufacturer count matches expected', manufacturerVerification.countMatches, `Expected: ${manufacturerVerification.expectedCount}, Actual: ${manufacturerVerification.actualCount}`);
+    logAssertion('All expected manufacturers present', manufacturerVerification.allManufacturersPresent, `Manufacturers: ${manufacturerVerification.manufacturerNames.join(', ')}`);
+
+    // Verify Popular Tags block
+    const tagsBlock = await homePage.verifyPopularTagsBlock();
+    expect(tagsBlock.isValid).toBeTruthy();
+    logAssertion('Popular tags block visible and valid', tagsBlock.isValid, `Title: "${tagsBlock.titleText}"`);
+
+    // Verify all popular tags match expected data
+    const tagsVerification = await homePage.verifyPopularTags(testData.leftSidebar.popularTags);
+    expect(tagsVerification.countMatches).toBeTruthy();
+    expect(tagsVerification.allTagsPresent).toBeTruthy();
+    logAssertion('Popular tags count matches expected', tagsVerification.countMatches, `Expected: ${tagsVerification.expectedCount}, Actual: ${tagsVerification.actualCount}`);
+    logAssertion('All expected tags present', tagsVerification.allTagsPresent, `Tags: ${tagsVerification.tagNames.join(', ')}`);
   });
 
   test('TC007 - Verify empty cart message', async ({ page }) => {
     await cartPage.goToCart();
+
+    // Verify header UI is stable on cart page
+    const headerUI = await cartPage.verifyCompleteHeaderUI();
+    expect(headerUI.allHeaderElementsVisible).toBeTruthy();
+
+    // Verify header menu is visible on cart page
+    const headerMenuOnCart = await cartPage.verifyHeaderMenuExists();
+    expect(headerMenuOnCart).toBeTruthy();
+
     const isEmpty = await cartPage.isCartEmpty();
     expect(isEmpty).toBeTruthy();
   });
@@ -370,15 +562,48 @@ test.describe('Cart Operations', () => {
     const product = testData.testProducts.simpleProducts[0];
 
     await productPage.goToProductDetail(product.url);
+
+    // Verify header UI is stable on product page
+    const headerUIProduct = await productPage.verifyCompleteHeaderUI();
+    expect(headerUIProduct.allHeaderElementsVisible).toBeTruthy();
+
+    // Verify header menu is visible on product page
+    const headerMenuOnProduct = await productPage.verifyHeaderMenuExists();
+    expect(headerMenuOnProduct).toBeTruthy();
+
+    // Add product first time with quantity 1
     await productPage.setQuantity(1);
     await productPage.addToCartFromDetailPage();
     await productPage.closeNotification();
 
+    // Verify cart quantity shows 1
+    let cartQtyVerification = await productPage.verifyHeaderCartQuantity(1);
+    expect(cartQtyVerification.matches).toBeTruthy();
+    logAssertion('Cart quantity updated correctly after first add', cartQtyVerification.matches, `Expected: ${cartQtyVerification.expectedQuantity}, Actual: ${cartQtyVerification.actualQuantity}`);
+
+    // Add same product again with quantity 2
     await productPage.setQuantity(2);
     await productPage.addToCartFromDetailPage();
     await productPage.closeNotification();
 
+    // Wait for cart quantity to update
+    await productPage.page.waitForTimeout(500);
+
+    // Verify cart quantity shows 3 (1 + 2)
+    cartQtyVerification = await productPage.verifyHeaderCartQuantity(3);
+    expect(cartQtyVerification.matches).toBeTruthy();
+    logAssertion('Cart quantity updated correctly after adding same product twice', cartQtyVerification.matches, `Expected: ${cartQtyVerification.expectedQuantity}, Actual: ${cartQtyVerification.actualQuantity}`);
+
     await cartPage.goToCart();
+
+    // Verify header UI is stable on cart page
+    const headerUICart = await cartPage.verifyCompleteHeaderUI();
+    expect(headerUICart.allHeaderElementsVisible).toBeTruthy();
+
+    // Verify header menu is visible on cart page
+    const headerMenuOnCart = await cartPage.verifyHeaderMenuExists();
+    expect(headerMenuOnCart).toBeTruthy();
+
     const items = await cartPage.getCartItems();
 
     expect(items.length).toBe(1);
@@ -390,13 +615,11 @@ test.describe('Cart Operations', () => {
 
   test('TC009 - Verify footer menu appears on homepage', async ({ page }) => {
     await test.step('Navigate to homepage', async () => {
-      logAction('Navigating to homepage');
       await homePage.goToHomePage();
       logStep('Navigate to homepage');
     });
 
     await test.step('Verify footer menu wrapper is visible', async () => {
-      logAction('Checking footer menu wrapper visibility');
       const footerExists = await homePage.verifyFooterMenuExists();
       expect(footerExists).toBeTruthy();
       logAssertion('Footer menu wrapper is visible', footerExists);
@@ -404,7 +627,6 @@ test.describe('Cart Operations', () => {
     });
 
     await test.step('Verify all footer sections are present', async () => {
-      logAction('Verifying all footer sections');
       const sections = await homePage.verifyFooterSections();
       expect(sections.information).toBeTruthy();
       expect(sections.customerService).toBeTruthy();
@@ -418,7 +640,6 @@ test.describe('Cart Operations', () => {
     });
 
     await test.step('Verify footer links are accessible', async () => {
-      logAction('Verifying footer links accessibility');
       const links = await homePage.verifyFooterLinks();
       expect(links.sitemap).toBeTruthy();
       expect(links.shippingReturns).toBeTruthy();
@@ -445,44 +666,51 @@ test.describe('Cart Operations', () => {
 
     // Register and login
     await test.step('Register new user', async () => {
-      logAction('Clicking Register button');
       await homePage.clickRegister();
-      logAction('Filling registration form', `Email: ${uniqueEmail}`);
       await registerPage.registerUser(userData);
       const isRegistered = await registerPage.isRegistrationSuccessful();
       expect(isRegistered).toBeTruthy();
       logAssertion('User registration successful', isRegistered);
-      logAction('Clicking Continue button');
       await registerPage.clickContinue();
+
+      // Verify logged-in user header elements are now visible
+      const loggedInHeader = await homePage.verifyLoggedInUserHeader(uniqueEmail);
+      expect(loggedInHeader.userAccountLinkVisible).toBeTruthy();
+      expect(loggedInHeader.logoutLinkVisible).toBeTruthy();
+      expect(loggedInHeader.shoppingCartLinkVisible).toBeTruthy();
+      expect(loggedInHeader.wishlistLinkVisible).toBeTruthy();
+      expect(loggedInHeader.userEmail).toBe(uniqueEmail);
+      expect(loggedInHeader.emailMatches).toBeTruthy();
+      expect(loggedInHeader.allLoggedInElementsVisible).toBeTruthy();
+      logAssertion('User account link visible in header', loggedInHeader.userAccountLinkVisible, `Email: ${loggedInHeader.userEmail}`);
+      logAssertion('Logout link visible in header', loggedInHeader.logoutLinkVisible);
+      logAssertion('Shopping cart link visible in logged-in header', loggedInHeader.shoppingCartLinkVisible, `Cart Qty: ${loggedInHeader.cartQuantity}`);
+      logAssertion('Wishlist link visible in logged-in header', loggedInHeader.wishlistLinkVisible, `Wishlist Qty: ${loggedInHeader.wishlistQuantity}`);
+      logAssertion('User email matches expected email', loggedInHeader.emailMatches, `Expected: ${uniqueEmail}, Actual: ${loggedInHeader.userEmail}`);
+      logAssertion('All logged-in header elements verified and visible', loggedInHeader.allLoggedInElementsVisible);
+
       logStep('Register new user');
     });
 
     // Add product to cart
     const product = testData.testProducts.multipleProducts[0];
     await test.step('Add product to cart', async () => {
-      logAction('Navigating to product', `URL: ${product.url}`);
       await productPage.goToProductDetail(product.url);
-      logAction('Setting quantity to 1');
       await productPage.setQuantity(1);
-      logAction('Adding product to cart');
       await productPage.addToCartFromDetailPage();
-      logAction('Closing notification');
       await productPage.closeNotification();
       logStep('Add product to cart');
     });
 
     // Navigate to cart to view subtotal and verify footer
     await test.step('Navigate to cart page and verify subtotal', async () => {
-      logAction('Navigating to cart page');
       await cartPage.goToCart();
-      logAction('Verifying cart has items');
       const isEmpty = await cartPage.isCartEmpty();
       expect(isEmpty).toBeFalsy();
       logStep('Navigate to cart page and verify subtotal');
     });
 
     await test.step('Verify footer menu wrapper is visible on cart page', async () => {
-      logAction('Checking footer menu wrapper visibility on cart');
       const footerExists = await cartPage.verifyFooterMenuExists();
       expect(footerExists).toBeTruthy();
       logAssertion('Footer menu wrapper visible on cart', footerExists);
@@ -490,7 +718,6 @@ test.describe('Cart Operations', () => {
     });
 
     await test.step('Verify all footer sections are present on cart page', async () => {
-      logAction('Verifying all footer sections on cart');
       const sections = await cartPage.verifyFooterSections();
       expect(sections.information).toBeTruthy();
       expect(sections.customerService).toBeTruthy();
@@ -504,7 +731,6 @@ test.describe('Cart Operations', () => {
     });
 
     await test.step('Verify footer links are accessible on cart page', async () => {
-      logAction('Verifying footer links accessibility on cart');
       const links = await cartPage.verifyFooterLinks();
       expect(links.sitemap).toBeTruthy();
       expect(links.privacyPolicy).toBeTruthy();
