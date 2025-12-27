@@ -1,0 +1,90 @@
+{
+  "users": {
+    "validUser": {
+      "email": "${TEST_USER_EMAIL}",
+      "password": "${TEST_USER_PASSWORD}"
+    },
+    "newUser": {
+      "gender": "male",
+      "firstName": "Test",
+      "lastName": "User",
+      "password": "Test@12345"
+    }
+  },
+  "testProducts": {
+    "simpleProducts": [
+      {
+        "url": "/computing-and-internet",
+        "name": "Computing and Internet",
+        "price": 10.0,
+        "quantity": 2
+      },
+      {
+        "url": "/smartphone",
+        "name": "Smartphone",
+        "price": 100.0,
+        "quantity": 1
+      },
+      {
+        "url": "/blue-jeans",
+        "name": "Blue Jeans",
+        "price": 1.0,
+        "quantity": 3
+      }
+    ],
+    "multipleProducts": [
+      {
+        "url": "/computing-and-internet",
+        "name": "Computing and Internet",
+        "price": 10.0,
+        "quantity": 2
+      },
+      {
+        "url": "/smartphone",
+        "name": "Smartphone",
+        "price": 100.0,
+        "quantity": 1
+      },
+      {
+        "url": "/blue-jeans",
+        "name": "Blue Jeans",
+        "price": 1.0,
+        "quantity": 1
+      }
+    ]
+  },
+  "addresses": {
+    "billing": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@test.com",
+      "country": "1",
+      "state": "",
+      "city": "New York",
+      "address1": "123 Test Street",
+      "zip": "10001",
+      "phone": "1234567890"
+    },
+    "shipping": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "country": "1",
+      "state": "",
+      "city": "Los Angeles",
+      "address1": "456 Shipping Ave",
+      "zip": "90001",
+      "phone": "0987654321"
+    }
+  },
+  "paymentMethods": {
+    "cashOnDelivery": "cod",
+    "checkMoneyOrder": "check",
+    "creditCard": "creditcard",
+    "purchaseOrder": "purchaseorder"
+  },
+  "shippingMethods": {
+    "ground": "ground",
+    "nextDay": "nextday",
+    "secondDay": "secondday"
+  }
+}
