@@ -1,0 +1,13 @@
+[2025-12-27T20:20:34.475Z] ▶ ACTION: Clicking Register button
+[2025-12-27T20:20:35.097Z] ▶ ACTION: Filling registration form | Email: testuser_1766866834471_288@test.com
+[2025-12-27T20:20:36.901Z] ▶ ACTION: Verifying registration success
+[2025-12-27T20:20:37.074Z] ✓ PASS: User registration successful
+[2025-12-27T20:20:37.075Z] ▶ ACTION: Clicking Continue button
+[2025-12-27T20:20:38.196Z] ✓ STEP: Register new user - SUCCESS
+[2025-12-27T20:20:38.198Z] ▶ ACTION: Navigating to product | URL: /computing-and-internet
+[2025-12-27T20:20:40.109Z] ▶ ACTION: Fetching product price
+[2025-12-27T20:20:40.155Z] ✓ PASS: Product price match (Expected: 10, Actual: 10)
+[2025-12-27T20:20:40.155Z] ▶ ACTION: Setting quantity | Quantity: 2
+[2025-12-27T20:20:40.230Z] ▶ ACTION: Adding product to cart
+[2025-12-27T20:20:40.709Z] ▶ ACTION: Closing notification
+[2025-12-27T20:20:40.789Z] ▶ ACTION: Navigating to product | URL: /smartphone

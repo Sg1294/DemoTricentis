@@ -1,0 +1,4 @@
+Error getting order subtotal: page.textContent: Timeout 15000ms exceeded.
+Call log:
+  - waiting for locator('.order-subtotal .value-summary')
+

@@ -1,0 +1,24 @@
+Price Verification Results:
+===========================
+Product 1: Computing and Internet
+  Unit Price: $10
+  Quantity: 2
+  Expected Subtotal: $20
+  Actual Subtotal: $20
+  Correct: true
+Product 2: Smartphone
+  Unit Price: $100
+  Quantity: 1
+  Expected Subtotal: $100
+  Actual Subtotal: $100
+  Correct: true
+Product 3: Blue Jeans
+  Unit Price: $1
+  Quantity: 3
+  Expected Subtotal: $3
+  Actual Subtotal: $3
+  Correct: true
+
+Order Subtotal: $123
+Calculated Subtotal: $123
+Subtotal Match: true

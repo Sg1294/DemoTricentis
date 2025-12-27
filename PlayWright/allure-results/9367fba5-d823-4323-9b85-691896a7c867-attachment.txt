@@ -1,0 +1,41 @@
+[2025-12-27T20:42:03.068Z] ▶ ACTION: Clicking Register button
+[2025-12-27T20:42:03.525Z] ▶ ACTION: Filling registration form | Email: testuser_1766868123065_71@test.com
+[2025-12-27T20:42:05.505Z] ▶ ACTION: Verifying registration success
+[2025-12-27T20:42:05.583Z] ✓ PASS: User registration successful
+[2025-12-27T20:42:05.584Z] ▶ ACTION: Clicking Continue button
+[2025-12-27T20:42:06.603Z] ✓ STEP: Register new user - SUCCESS
+[2025-12-27T20:42:06.604Z] ▶ ACTION: Navigating to product | URL: /computing-and-internet
+[2025-12-27T20:42:07.887Z] ▶ ACTION: Fetching product price
+[2025-12-27T20:42:07.931Z] ✓ PASS: Product price match (Expected: 10, Actual: 10)
+[2025-12-27T20:42:07.931Z] ▶ ACTION: Setting quantity | Quantity: 2
+[2025-12-27T20:42:07.976Z] ▶ ACTION: Adding product to cart
+[2025-12-27T20:42:08.337Z] ▶ ACTION: Closing notification
+[2025-12-27T20:42:08.410Z] ▶ ACTION: Navigating to product | URL: /smartphone
+[2025-12-27T20:42:09.520Z] ▶ ACTION: Fetching product price
+[2025-12-27T20:42:09.547Z] ✓ PASS: Product price match (Expected: 100, Actual: 100)
+[2025-12-27T20:42:09.547Z] ▶ ACTION: Setting quantity | Quantity: 1
+[2025-12-27T20:42:09.566Z] ▶ ACTION: Adding product to cart
+[2025-12-27T20:42:09.938Z] ▶ ACTION: Closing notification
+[2025-12-27T20:42:10.231Z] ▶ ACTION: Navigating to product | URL: /blue-jeans
+[2025-12-27T20:42:11.335Z] ▶ ACTION: Fetching product price
+[2025-12-27T20:42:11.370Z] ✓ PASS: Product price match (Expected: 1, Actual: 1)
+[2025-12-27T20:42:11.370Z] ▶ ACTION: Setting quantity | Quantity: 1
+[2025-12-27T20:42:11.402Z] ▶ ACTION: Adding product to cart
+[2025-12-27T20:42:11.718Z] ▶ ACTION: Closing notification
+[2025-12-27T20:42:11.795Z] ✓ STEP: Add multiple products to cart - SUCCESS
+[2025-12-27T20:42:11.796Z] ▶ ACTION: Navigating to cart page
+[2025-12-27T20:42:12.866Z] ▶ ACTION: Fetching cart items
+[2025-12-27T20:42:13.242Z] ✓ PASS: Cart contains expected items (Count: 3)
+[2025-12-27T20:42:13.244Z] ✓ PASS: Item 1 subtotal calculation | Expected: 20, Actual: 20
+[2025-12-27T20:42:13.246Z] ✓ PASS: Item 2 subtotal calculation | Expected: 100, Actual: 100
+[2025-12-27T20:42:13.248Z] ✓ PASS: Item 3 subtotal calculation | Expected: 1, Actual: 1
+[2025-12-27T20:42:13.248Z] ▶ ACTION: Fetching order subtotal
+[2025-12-27T20:42:13.267Z] ✓ PASS: Order subtotal verification | Expected: 121, Actual: 121
+[2025-12-27T20:42:13.267Z] ▶ ACTION: Verifying price calculations
+[2025-12-27T20:42:28.508Z] ✓ PASS: Price calculations verified
+[2025-12-27T20:42:28.508Z] ✓ STEP: Verify cart contents and calculations - SUCCESS
+[2025-12-27T20:42:28.509Z] ▶ ACTION: Proceeding to checkout
+[2025-12-27T20:42:30.118Z] ▶ ACTION: Completing checkout | Ground shipping, COD payment
+[2025-12-27T20:42:33.843Z] ▶ ACTION: Verifying order confirmation
+[2025-12-27T20:42:35.089Z] ✓ PASS: Order confirmed successfully
+[2025-12-27T20:42:35.089Z] ✓ STEP: Complete checkout process - SUCCESS

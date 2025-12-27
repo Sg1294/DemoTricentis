@@ -1,0 +1,178 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "Tricentis Demo Web Shop" [ref=e6]:
+        - /url: /
+        - img "Tricentis Demo Web Shop" [ref=e7]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "Shwetagulati.16march@gmail.com" [ref=e12]:
+            - /url: /customer/info
+        - listitem [ref=e13]:
+          - link "Log out" [ref=e14]:
+            - /url: /logout
+        - listitem [ref=e15]:
+          - link "Shopping cart (15)" [ref=e16]:
+            - /url: /cart
+            - generic [ref=e17]: Shopping cart
+            - generic [ref=e18]: (15)
+        - listitem [ref=e19]:
+          - link "Wishlist (0)" [ref=e20]:
+            - /url: /wishlist
+            - generic [ref=e21]: Wishlist
+            - generic [ref=e22]: (0)
+      - generic [ref=e24]:
+        - status [ref=e25]
+        - textbox [ref=e26]: Search store
+        - button "Search" [ref=e27] [cursor=pointer]
+    - list [ref=e29]:
+      - listitem [ref=e30]:
+        - link "Books" [ref=e31]:
+          - /url: /books
+      - listitem [ref=e32]:
+        - link "Computers" [ref=e33]:
+          - /url: /computers
+      - listitem [ref=e34]:
+        - link "Electronics" [ref=e35]:
+          - /url: /electronics
+      - listitem [ref=e36]:
+        - link "Apparel & Shoes" [ref=e37]:
+          - /url: /apparel-shoes
+      - listitem [ref=e38]:
+        - link "Digital downloads" [ref=e39]:
+          - /url: /digital-downloads
+      - listitem [ref=e40]:
+        - link "Jewelry" [ref=e41]:
+          - /url: /jewelry
+      - listitem [ref=e42]:
+        - link "Gift Cards" [ref=e43]:
+          - /url: /gift-cards
+    - generic [ref=e45]:
+      - heading "Checkout" [level=1] [ref=e47]
+      - list [ref=e49]:
+        - listitem [ref=e50]:
+          - generic [ref=e51]:
+            - generic [ref=e52]: "1"
+            - heading "Billing address" [level=2] [ref=e53]
+            - text: .
+          - generic [ref=e54]:
+            - generic [ref=e58]:
+              - text: Select a billing address from your address book or enter a new address.
+              - combobox "Select a billing address from your address book or enter a new address." [ref=e60]:
+                - option "Shweta Gulati, f, ff 123456, Albania" [selected]
+                - option "New Address"
+            - button "Continue" [ref=e62] [cursor=pointer]
+        - listitem [ref=e63]:
+          - generic [ref=e64]:
+            - generic [ref=e65]: "2"
+            - heading "Shipping address" [level=2] [ref=e66]
+            - text: .
+        - listitem [ref=e67]:
+          - generic [ref=e68]:
+            - generic [ref=e69]: "3"
+            - heading "Shipping method" [level=2] [ref=e70]
+            - text: .
+        - listitem [ref=e71]:
+          - generic [ref=e72]:
+            - generic [ref=e73]: "4"
+            - heading "Payment method" [level=2] [ref=e74]
+            - text: .
+        - listitem [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]: "5"
+            - heading "Payment information" [level=2] [ref=e78]
+            - text: .
+        - listitem [ref=e79]:
+          - generic [ref=e80]:
+            - generic [ref=e81]: "6"
+            - heading "Confirm order" [level=2] [ref=e82]
+            - text: .
+  - generic [ref=e83]:
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - heading "Information" [level=3] [ref=e86]
+        - list [ref=e87]:
+          - listitem [ref=e88]:
+            - link "Sitemap" [ref=e89]:
+              - /url: /sitemap
+          - listitem [ref=e90]:
+            - link "Shipping & Returns" [ref=e91]:
+              - /url: /shipping-returns
+          - listitem [ref=e92]:
+            - link "Privacy Notice" [ref=e93]:
+              - /url: /privacy-policy
+          - listitem [ref=e94]:
+            - link "Conditions of Use" [ref=e95]:
+              - /url: /conditions-of-use
+          - listitem [ref=e96]:
+            - link "About us" [ref=e97]:
+              - /url: /about-us
+          - listitem [ref=e98]:
+            - link "Contact us" [ref=e99]:
+              - /url: /contactus
+      - generic [ref=e100]:
+        - heading "Customer service" [level=3] [ref=e101]
+        - list [ref=e102]:
+          - listitem [ref=e103]:
+            - link "Search" [ref=e104]:
+              - /url: /search
+          - listitem [ref=e105]:
+            - link "News" [ref=e106]:
+              - /url: /news
+          - listitem [ref=e107]:
+            - link "Blog" [ref=e108]:
+              - /url: /blog
+          - listitem [ref=e109]:
+            - link "Recently viewed products" [ref=e110]:
+              - /url: /recentlyviewedproducts
+          - listitem [ref=e111]:
+            - link "Compare products list" [ref=e112]:
+              - /url: /compareproducts
+          - listitem [ref=e113]:
+            - link "New products" [ref=e114]:
+              - /url: /newproducts
+      - generic [ref=e115]:
+        - heading "My account" [level=3] [ref=e116]
+        - list [ref=e117]:
+          - listitem [ref=e118]:
+            - link "My account" [ref=e119]:
+              - /url: /customer/info
+          - listitem [ref=e120]:
+            - link "Orders" [ref=e121]:
+              - /url: /customer/orders
+          - listitem [ref=e122]:
+            - link "Addresses" [ref=e123]:
+              - /url: /customer/addresses
+          - listitem [ref=e124]:
+            - link "Shopping cart" [ref=e125]:
+              - /url: /cart
+          - listitem [ref=e126]:
+            - link "Wishlist" [ref=e127]:
+              - /url: /wishlist
+      - generic [ref=e128]:
+        - heading "Follow us" [level=3] [ref=e129]
+        - list [ref=e130]:
+          - listitem [ref=e131]:
+            - link "Facebook" [ref=e132]:
+              - /url: http://www.facebook.com/nopCommerce
+          - listitem [ref=e133]:
+            - link "Twitter" [ref=e134]:
+              - /url: https://twitter.com/nopCommerce
+          - listitem [ref=e135]:
+            - link "RSS" [ref=e136]:
+              - /url: /news/rss/1
+          - listitem [ref=e137]:
+            - link "YouTube" [ref=e138]:
+              - /url: http://www.youtube.com/user/nopCommerce
+          - listitem [ref=e139]:
+            - link "Google+" [ref=e140]:
+              - /url: https://plus.google.com/+nopcommerce
+    - generic [ref=e141]:
+      - text: Powered by
+      - link "nopCommerce" [ref=e142]:
+        - /url: http://www.nopcommerce.com/
+    - generic [ref=e143]: Copyright © 2025 Tricentis Demo Web Shop. All rights reserved.
+```

@@ -1,0 +1,22 @@
+Checkout failed: page.click: Timeout 15000ms exceeded.
+Call log:
+  - waiting for locator('input.button-1.new-address-next-step-button')
+    - locator resolved to 2 elements. Proceeding with the first one: <input type="button" title="Continue" value="Continue" disabled="disabled" onclick="Billing.save()" class="button-1 new-address-next-step-button"/>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+      - waiting 100ms
+    - waiting for element to be visible, enabled and stable
+    - element is not enabled
+  27 × retrying click action
+       - waiting 500ms
+       - waiting for element to be visible, enabled and stable
+       - element is not visible
+  - retrying click action
+    - waiting 500ms
+

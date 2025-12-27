@@ -1,0 +1,2 @@
+[2025-12-27T18:07:38.095Z] ▶ ACTION: Clicking Register button
+[2025-12-27T18:07:38.616Z] ▶ ACTION: Filling registration form | Email: testuser_1766858858095_678@test.com

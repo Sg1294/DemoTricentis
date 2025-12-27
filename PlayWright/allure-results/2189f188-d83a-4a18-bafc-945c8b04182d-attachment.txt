@@ -1,0 +1,30 @@
+[2025-12-27T20:23:27.449Z] ▶ ACTION: Clicking Register button
+[2025-12-27T20:23:28.252Z] ▶ ACTION: Filling registration form | Email: testuser_1766867007448_844@test.com
+[2025-12-27T20:23:30.526Z] ✓ PASS: User registration successful
+[2025-12-27T20:23:30.526Z] ▶ ACTION: Clicking Continue button
+[2025-12-27T20:23:31.765Z] ✓ STEP: Register new user - SUCCESS
+[2025-12-27T20:23:31.766Z] ▶ ACTION: Navigating to product | URL: /computing-and-internet
+[2025-12-27T20:23:32.911Z] ▶ ACTION: Setting quantity to 1
+[2025-12-27T20:23:33.104Z] ▶ ACTION: Adding product to cart
+[2025-12-27T20:23:33.550Z] ▶ ACTION: Closing notification
+[2025-12-27T20:23:33.767Z] ✓ STEP: Add product to cart - SUCCESS
+[2025-12-27T20:23:33.768Z] ▶ ACTION: Navigating to cart page
+[2025-12-27T20:23:34.774Z] ▶ ACTION: Verifying cart has items
+[2025-12-27T20:23:34.853Z] ✓ STEP: Navigate to cart page and verify subtotal - SUCCESS
+[2025-12-27T20:23:34.854Z] ▶ ACTION: Checking footer menu wrapper visibility on cart
+[2025-12-27T20:23:34.864Z] ✓ PASS: Footer menu wrapper visible on cart
+[2025-12-27T20:23:34.865Z] ✓ STEP: Verify footer menu wrapper is visible on cart page - SUCCESS
+[2025-12-27T20:23:34.865Z] ▶ ACTION: Verifying all footer sections on cart
+[2025-12-27T20:23:34.912Z] ✓ PASS: Information section visible on cart
+[2025-12-27T20:23:34.912Z] ✓ PASS: Customer Service section visible on cart
+[2025-12-27T20:23:34.912Z] ✓ PASS: My Account section visible on cart
+[2025-12-27T20:23:34.912Z] ✓ PASS: Follow Us section visible on cart
+[2025-12-27T20:23:34.912Z] ✓ STEP: Verify all footer sections are present on cart page - SUCCESS
+[2025-12-27T20:23:34.913Z] ▶ ACTION: Verifying footer links accessibility on cart
+[2025-12-27T20:23:35.212Z] ✓ PASS: Sitemap link visible on cart
+[2025-12-27T20:23:35.212Z] ✓ PASS: Privacy Policy link visible on cart
+[2025-12-27T20:23:35.212Z] ✓ PASS: About Us link visible on cart
+[2025-12-27T20:23:35.213Z] ✓ PASS: My Account link visible on cart
+[2025-12-27T20:23:35.213Z] ✓ PASS: Orders link visible on cart
+[2025-12-27T20:23:35.213Z] ✓ PASS: Cart link visible on cart
+[2025-12-27T20:23:35.213Z] ✓ STEP: Verify footer links are accessible on cart page - SUCCESS

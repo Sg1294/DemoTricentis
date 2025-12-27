@@ -1,0 +1,188 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "Tricentis Demo Web Shop" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "Tricentis Demo Web Shop" [ref=e7]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "testuser_1766855963293_863@test.com" [ref=e12] [cursor=pointer]:
+            - /url: /customer/info
+        - listitem [ref=e13]:
+          - link "Log out" [ref=e14] [cursor=pointer]:
+            - /url: /logout
+        - listitem [ref=e15]:
+          - link "Shopping cart (4)" [ref=e16] [cursor=pointer]:
+            - /url: /cart
+            - generic [ref=e17]: Shopping cart
+            - generic [ref=e18]: (4)
+        - listitem [ref=e19]:
+          - link "Wishlist (0)" [ref=e20] [cursor=pointer]:
+            - /url: /wishlist
+            - generic [ref=e21]: Wishlist
+            - generic [ref=e22]: (0)
+      - generic [ref=e24]:
+        - status [ref=e25]
+        - textbox [ref=e26]: Search store
+        - button "Search" [ref=e27] [cursor=pointer]
+    - list [ref=e29]:
+      - listitem [ref=e30]:
+        - link "Books" [ref=e31] [cursor=pointer]:
+          - /url: /books
+      - listitem [ref=e32]:
+        - link "Computers" [ref=e33] [cursor=pointer]:
+          - /url: /computers
+      - listitem [ref=e34]:
+        - link "Electronics" [ref=e35] [cursor=pointer]:
+          - /url: /electronics
+      - listitem [ref=e36]:
+        - link "Apparel & Shoes" [ref=e37] [cursor=pointer]:
+          - /url: /apparel-shoes
+      - listitem [ref=e38]:
+        - link "Digital downloads" [ref=e39] [cursor=pointer]:
+          - /url: /digital-downloads
+      - listitem [ref=e40]:
+        - link "Jewelry" [ref=e41] [cursor=pointer]:
+          - /url: /jewelry
+      - listitem [ref=e42]:
+        - link "Gift Cards" [ref=e43] [cursor=pointer]:
+          - /url: /gift-cards
+    - generic [ref=e45]:
+      - heading "Checkout" [level=1] [ref=e47]
+      - list [ref=e49]:
+        - listitem [ref=e50]:
+          - generic [ref=e51] [cursor=pointer]:
+            - generic [ref=e52]: "1"
+            - heading "Billing address" [level=2] [ref=e53]
+            - text: .
+        - listitem [ref=e54]:
+          - generic [ref=e55]:
+            - generic [ref=e56]: "2"
+            - heading "Shipping address" [level=2] [ref=e57]
+            - text: .
+          - generic [ref=e58]:
+            - generic [ref=e61]:
+              - generic [ref=e63]:
+                - text: Select a shipping address from your address book or enter a new address.
+                - combobox "Select a shipping address from your address book or enter a new address." [ref=e65]:
+                  - option "John Doe, 123 Test Street, New York 10001, United States" [selected]
+                  - option "New Address"
+              - generic [ref=e66]:
+                - paragraph [ref=e67]:
+                  - checkbox "In-Store Pickup" [ref=e68]
+                  - text: In-Store Pickup
+                - paragraph [ref=e69]: Pick up your items at the store (put your store address here)
+            - generic [ref=e70]:
+              - paragraph [ref=e71]:
+                - link "Back" [ref=e72] [cursor=pointer]:
+                  - /url: "#"
+              - button "Continue" [ref=e73] [cursor=pointer]
+        - listitem [ref=e74]:
+          - generic [ref=e75]:
+            - generic [ref=e76]: "3"
+            - heading "Shipping method" [level=2] [ref=e77]
+            - text: .
+        - listitem [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e80]: "4"
+            - heading "Payment method" [level=2] [ref=e81]
+            - text: .
+        - listitem [ref=e82]:
+          - generic [ref=e83]:
+            - generic [ref=e84]: "5"
+            - heading "Payment information" [level=2] [ref=e85]
+            - text: .
+        - listitem [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]: "6"
+            - heading "Confirm order" [level=2] [ref=e89]
+            - text: .
+  - generic [ref=e90]:
+    - generic [ref=e91]:
+      - generic [ref=e92]:
+        - heading "Information" [level=3] [ref=e93]
+        - list [ref=e94]:
+          - listitem [ref=e95]:
+            - link "Sitemap" [ref=e96] [cursor=pointer]:
+              - /url: /sitemap
+          - listitem [ref=e97]:
+            - link "Shipping & Returns" [ref=e98] [cursor=pointer]:
+              - /url: /shipping-returns
+          - listitem [ref=e99]:
+            - link "Privacy Notice" [ref=e100] [cursor=pointer]:
+              - /url: /privacy-policy
+          - listitem [ref=e101]:
+            - link "Conditions of Use" [ref=e102] [cursor=pointer]:
+              - /url: /conditions-of-use
+          - listitem [ref=e103]:
+            - link "About us" [ref=e104] [cursor=pointer]:
+              - /url: /about-us
+          - listitem [ref=e105]:
+            - link "Contact us" [ref=e106] [cursor=pointer]:
+              - /url: /contactus
+      - generic [ref=e107]:
+        - heading "Customer service" [level=3] [ref=e108]
+        - list [ref=e109]:
+          - listitem [ref=e110]:
+            - link "Search" [ref=e111] [cursor=pointer]:
+              - /url: /search
+          - listitem [ref=e112]:
+            - link "News" [ref=e113] [cursor=pointer]:
+              - /url: /news
+          - listitem [ref=e114]:
+            - link "Blog" [ref=e115] [cursor=pointer]:
+              - /url: /blog
+          - listitem [ref=e116]:
+            - link "Recently viewed products" [ref=e117] [cursor=pointer]:
+              - /url: /recentlyviewedproducts
+          - listitem [ref=e118]:
+            - link "Compare products list" [ref=e119] [cursor=pointer]:
+              - /url: /compareproducts
+          - listitem [ref=e120]:
+            - link "New products" [ref=e121] [cursor=pointer]:
+              - /url: /newproducts
+      - generic [ref=e122]:
+        - heading "My account" [level=3] [ref=e123]
+        - list [ref=e124]:
+          - listitem [ref=e125]:
+            - link "My account" [ref=e126] [cursor=pointer]:
+              - /url: /customer/info
+          - listitem [ref=e127]:
+            - link "Orders" [ref=e128] [cursor=pointer]:
+              - /url: /customer/orders
+          - listitem [ref=e129]:
+            - link "Addresses" [ref=e130] [cursor=pointer]:
+              - /url: /customer/addresses
+          - listitem [ref=e131]:
+            - link "Shopping cart" [ref=e132] [cursor=pointer]:
+              - /url: /cart
+          - listitem [ref=e133]:
+            - link "Wishlist" [ref=e134] [cursor=pointer]:
+              - /url: /wishlist
+      - generic [ref=e135]:
+        - heading "Follow us" [level=3] [ref=e136]
+        - list [ref=e137]:
+          - listitem [ref=e138]:
+            - link "Facebook" [ref=e139] [cursor=pointer]:
+              - /url: http://www.facebook.com/nopCommerce
+          - listitem [ref=e140]:
+            - link "Twitter" [ref=e141] [cursor=pointer]:
+              - /url: https://twitter.com/nopCommerce
+          - listitem [ref=e142]:
+            - link "RSS" [ref=e143] [cursor=pointer]:
+              - /url: /news/rss/1
+          - listitem [ref=e144]:
+            - link "YouTube" [ref=e145] [cursor=pointer]:
+              - /url: http://www.youtube.com/user/nopCommerce
+          - listitem [ref=e146]:
+            - link "Google+" [ref=e147] [cursor=pointer]:
+              - /url: https://plus.google.com/+nopcommerce
+    - generic [ref=e148]:
+      - text: Powered by
+      - link "nopCommerce" [ref=e149] [cursor=pointer]:
+        - /url: http://www.nopcommerce.com/
+    - generic [ref=e150]: Copyright © 2025 Tricentis Demo Web Shop. All rights reserved.
+```

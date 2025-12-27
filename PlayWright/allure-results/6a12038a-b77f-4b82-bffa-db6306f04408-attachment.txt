@@ -1,0 +1,4 @@
+Failed to select payment method 'cod' using specific selector. Falling back to first available option. Error: page.waitForSelector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator('#paymentmethod_0') to be visible
+

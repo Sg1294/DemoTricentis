@@ -1,0 +1,8 @@
+Order Summary:
+  Subtotal: $20
+  Shipping: $0
+  Tax: $0
+  Discount: $0
+  Expected Total: $20
+  Actual Total: $20
+  Total Match: true
