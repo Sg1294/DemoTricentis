@@ -20,6 +20,21 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Verify test credentials are available
+      run: |
+        if [ -z "$TEST_USER_EMAIL" ]; then
+          echo "WARNING: TEST_USER_EMAIL is not set"
+        else
+          echo "TEST_USER_EMAIL is set"
+        fi
+        if [ -z "$TEST_USER_PASSWORD" ]; then
+          echo "WARNING: TEST_USER_PASSWORD is not set"
+        else
+          echo "TEST_USER_PASSWORD is set"
+        fi
+      env:
+        TEST_USER_EMAIL: ${{ secrets.USERNAME }}
+        TEST_USER_PASSWORD: ${{ secrets.PASSWORD }}
     - name: Run Playwright tests
       run: npx playwright test
       env:
