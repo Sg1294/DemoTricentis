@@ -8,6 +8,9 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      TEST_USER_EMAIL: ${{ secrets.USERNAME }}
+      TEST_USER_PASSWORD: ${{ secrets.PASSWORD }}
     defaults:
       run:
         working-directory: ./PlayWright
@@ -35,14 +38,8 @@ jobs:
         fi
         echo "All environment variables:"
         env | grep TEST_ || echo "No TEST_ variables found"
-      env:
-        TEST_USER_EMAIL: ${{ secrets.USERNAME }}
-        TEST_USER_PASSWORD: ${{ secrets.PASSWORD }}
     - name: Run Playwright tests
       run: npx playwright test
-      env:
-        TEST_USER_EMAIL: ${{ secrets.USERNAME }}
-        TEST_USER_PASSWORD: ${{ secrets.PASSWORD }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
