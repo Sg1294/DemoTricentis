@@ -8,7 +8,7 @@ require('dotenv').config();
  * @returns {Object} Parsed test data
  */
 function loadTestData(fileName = 'testData.json') {
-  const filePath = path.join(__dirname, '..', 'data', fileName);
+  const filePath = path.join(__dirname, '..', 'Data', fileName);
   const rawData = fs.readFileSync(filePath, 'utf8');
   let data = JSON.parse(rawData);
   data = replaceEnvVariables(data);
