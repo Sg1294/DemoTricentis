@@ -8,6 +8,7 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: production  # Change this to your environment name
     env:
       TEST_USER_EMAIL: ${{ secrets.USERNAME }}
       TEST_USER_PASSWORD: ${{ secrets.PASSWORD }}
