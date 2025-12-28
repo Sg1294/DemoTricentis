@@ -53,15 +53,18 @@ class HomePage extends BasePage {
   }
 
   async clickLogin() {
-    await this.clickElement(this.selectors.loginLink);
+    // Recommended: Using user-facing locator instead of CSS class
+    await this.page.getByRole('link', { name: 'Log in' }).click();
   }
 
   async clickRegister() {
-    await this.clickElement(this.selectors.registerLink);
+    // Recommended: Using user-facing locator instead of CSS class
+    await this.page.getByRole('link', { name: 'Register' }).click();
   }
 
   async clickLogout() {
-    await this.clickElement(this.selectors.logoutLink);
+    // Recommended: Using user-facing locator instead of CSS class
+    await this.page.getByRole('link', { name: 'Log out' }).click();
   }
 
   async goToCart() {

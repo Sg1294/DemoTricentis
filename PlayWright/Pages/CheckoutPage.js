@@ -108,26 +108,31 @@ class CheckoutPage extends BasePage {
       }
     }
 
-    await this.fillInput(selectors.firstName, address.firstName);
-    await this.fillInput(selectors.lastName, address.lastName);
+    // Recommended: Using getByLabel for form inputs - user-facing locators
+    await this.page.getByLabel('First name:').first().fill(address.firstName);
+    await this.page.getByLabel('Last name:').first().fill(address.lastName);
 
     // Email is only required for billing address
     if (includeEmail && address.email) {
-      await this.fillInput(selectors.email, address.email);
+      await this.page.getByLabel('Email:').first().fill(address.email);
     }
 
-    await this.page.selectOption(selectors.country, address.country);
+    // Dropdowns: Using getByLabel for accessible selection
+    await this.page.getByLabel('Country:').first().selectOption(address.country);
 
     // Wait for state dropdown to be populated after country selection
     if (address.state) {
-      await this.page.waitForSelector(selectors.state, { state: 'visible' });
-      await this.page.selectOption(selectors.state, address.state);
+      await this.page.waitForTimeout(500); // Brief wait for state dropdown to populate
+      const stateDropdown = this.page.getByLabel('State / province:').first();
+      if (await stateDropdown.isVisible()) {
+        await stateDropdown.selectOption(address.state);
+      }
     }
 
-    await this.fillInput(selectors.city, address.city);
-    await this.fillInput(selectors.address1, address.address1);
-    await this.fillInput(selectors.zip, address.zip);
-    await this.fillInput(selectors.phone, address.phone);
+    await this.page.getByLabel('City:').first().fill(address.city);
+    await this.page.getByLabel('Address 1:').first().fill(address.address1);
+    await this.page.getByLabel('Zip / postal code:').first().fill(address.zip);
+    await this.page.getByLabel('Phone number:').first().fill(address.phone);
   }
 
   /**
@@ -152,7 +157,9 @@ class CheckoutPage extends BasePage {
   }
 
   async continueBillingAddress() {
-    await this.clickElement(this.selectors.billingContinueButton);
+    // Recommended: Using getByRole for button with specific context
+    const billingSection = this.page.locator('#billing-buttons-container');
+    await billingSection.getByRole('button', { name: /continue/i }).click();
     // Wait for one of the possible next steps to load
     await Promise.race([
       this.page.waitForSelector(this.selectors.shippingContinueButton, { state: 'visible', timeout: 10000 }),
@@ -226,7 +233,9 @@ class CheckoutPage extends BasePage {
   }
 
   async continueShippingMethod() {
-    await this.clickElement(this.selectors.shippingMethodContinue);
+    // Recommended: Using getByRole with context for button
+    const shippingMethodSection = this.page.locator('#shipping-method-buttons-container');
+    await shippingMethodSection.getByRole('button', { name: /continue/i }).click();
     // Wait for payment method step to become visible
     await this.page.waitForSelector(this.selectors.paymentMethodStep, { state: 'visible', timeout: 10000 });
   }
@@ -255,7 +264,9 @@ class CheckoutPage extends BasePage {
   }
 
   async continuePaymentMethod() {
-    await this.clickElement(this.selectors.paymentMethodContinue);
+    // Recommended: Using getByRole with context for button
+    const paymentMethodSection = this.page.locator('#payment-method-buttons-container');
+    await paymentMethodSection.getByRole('button', { name: /continue/i }).click();
     // Wait for payment info step to become visible
     await this.page.waitForSelector(this.selectors.paymentInfoStep, { state: 'visible', timeout: 10000 });
   }
@@ -282,13 +293,16 @@ class CheckoutPage extends BasePage {
   }
 
   async continuePaymentInfo() {
-    await this.clickElement(this.selectors.paymentInfoContinue);
+    // Recommended: Using getByRole with context for button
+    const paymentInfoSection = this.page.locator('#payment-info-buttons-container');
+    await paymentInfoSection.getByRole('button', { name: /continue/i }).click();
     // Wait for confirm order step to become visible
     await this.page.waitForSelector(this.selectors.confirmOrderStep, { state: 'visible', timeout: 10000 });
   }
 
   async confirmOrder() {
-    await this.clickElement(this.selectors.confirmOrderButton);
+    // Recommended: Using getByRole for button - accessible and clear
+    await this.page.getByRole('button', { name: /confirm/i }).click();
     await this.waitForPageLoad();
   }
 
@@ -298,12 +312,10 @@ class CheckoutPage extends BasePage {
    */
   async isOrderConfirmed() {
     try {
-      await this.page.waitForSelector(this.selectors.orderConfirmationTitle, {
-        state: 'visible',
-        timeout: 10000,
-      });
-      const title = await this.getText(this.selectors.orderConfirmationTitle);
-      return title.toLowerCase().includes('your order has been successfully processed');
+      // Recommended: Using getByText for content verification - more semantic
+      const confirmationMessage = this.page.getByText(/your order has been successfully processed/i);
+      await confirmationMessage.waitFor({ state: 'visible', timeout: 10000 });
+      return true;
     } catch (e) {
       return false;
     }

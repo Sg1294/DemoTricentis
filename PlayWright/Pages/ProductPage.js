@@ -97,22 +97,22 @@ class ProductPage extends BasePage {
   }
 
   async setQuantity(quantity) {
-    await this.page.fill(this.selectors.quantityInput, quantity.toString());
+    // Recommended: Using getByLabel for form input - user-facing locator
+    await this.page.getByLabel('Qty:').fill(quantity.toString());
   }
 
   async getQuantity() {
-    const value = await this.page.inputValue(this.selectors.quantityInput);
+    // Recommended: Using getByLabel for form input
+    const value = await this.page.getByLabel('Qty:').inputValue();
     return parseInt(value, 10);
   }
 
   async addToCartFromDetailPage() {
-    const addButton = await this.page.$('input[id^="add-to-cart-button-"]');
-    if (addButton) {
-      await addButton.click();
-      await this.waitForNotification();
-    } else {
-      throw new Error('Add to cart button not found');
-    }
+    // Recommended: Using getByRole scoped to product detail form to avoid matching related products
+    // This combines user-facing locator with necessary scoping for uniqueness
+    const productDetailSection = this.page.locator('.product-essential');
+    await productDetailSection.getByRole('button', { name: 'Add to cart' }).click();
+    await this.waitForNotification();
   }
 
   async waitForNotification() {
@@ -122,9 +122,11 @@ class ProductPage extends BasePage {
 
   async closeNotification() {
     try {
-      const closeBtn = await this.page.$(`${this.selectors.barNotification} ${this.selectors.closeNotification}`);
-      if (closeBtn) {
-        await closeBtn.click();
+      // Recommended: Using getByLabel or getByRole for close button
+      // Try multiple approaches as close buttons can have different ARIA labels
+      const closeButton = this.page.locator('#bar-notification').getByRole('link', { name: 'close' });
+      if (await closeButton.isVisible()) {
+        await closeButton.click();
       }
     } catch (e) {
       // Notification may have auto-closed

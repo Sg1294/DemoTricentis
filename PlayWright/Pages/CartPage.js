@@ -237,8 +237,14 @@ class CartPage extends BasePage {
   }
 
   async proceedToCheckout() {
-    await this.page.check(this.selectors.termsOfServiceCheckbox);
-    await this.clickElement(this.selectors.checkoutButton);
+    // NOTE: This checkbox lacks proper accessibility labels, so we use CSS selector
+    // Best Practice: Would be to use getByRole('checkbox', { name: /terms/i })
+    // but the application doesn't have proper ARIA labels for this element
+    // Using CSS selector as fallback - acceptable when app has accessibility gaps
+    await this.page.locator('#termsofservice').check();
+
+    // Recommended: Using getByRole for button - best practice
+    await this.page.getByRole('button', { name: 'Checkout' }).click();
     await this.waitForPageLoad();
   }
 

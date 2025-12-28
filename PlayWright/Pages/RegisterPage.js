@@ -30,38 +30,44 @@ class RegisterPage extends BasePage {
   }
 
   async registerUser(userData) {
+    // Recommended: Using getByRole for radio buttons - more specific than getByLabel
     if (userData.gender === 'male') {
-      await this.clickElement(this.selectors.genderMale);
+      await this.page.getByRole('radio', { name: 'Male', exact: true }).check();
     } else if (userData.gender === 'female') {
-      await this.clickElement(this.selectors.genderFemale);
+      await this.page.getByRole('radio', { name: 'Female' }).check();
     }
 
-    await this.fillInput(this.selectors.firstNameInput, userData.firstName);
-    await this.fillInput(this.selectors.lastNameInput, userData.lastName);
-    await this.fillInput(this.selectors.emailInput, userData.email);
-    await this.fillInput(this.selectors.passwordInput, userData.password);
-    await this.fillInput(this.selectors.confirmPasswordInput, userData.password);
+    // Recommended: Using getByLabel for form inputs - reflects what users see
+    await this.page.getByLabel('First name:').fill(userData.firstName);
+    await this.page.getByLabel('Last name:').fill(userData.lastName);
+    await this.page.getByLabel('Email:').fill(userData.email);
+    await this.page.getByLabel('Password:', { exact: true }).fill(userData.password);
+    await this.page.getByLabel('Confirm password:').fill(userData.password);
 
-    await this.clickElement(this.selectors.registerButton);
+    // Recommended: Using getByRole for buttons - best practice
+    await this.page.getByRole('button', { name: 'Register' }).click();
     await this.waitForPageLoad();
   }
 
   async isRegistrationSuccessful() {
     try {
-      await this.page.waitForSelector(this.selectors.resultMessage, { state: 'visible', timeout: 5000 });
-      const message = await this.getText(this.selectors.resultMessage);
-      return message.includes('Your registration completed');
+      // Recommended: Using getByText for content verification - more semantic
+      const successMessage = this.page.getByText(/your registration completed/i);
+      await successMessage.waitFor({ state: 'visible', timeout: 5000 });
+      return true;
     } catch (e) {
       return false;
     }
   }
 
   async getResultMessage() {
+    // Keep CSS selector for data extraction as it's a specific div
     return await this.getText(this.selectors.resultMessage);
   }
 
   async clickContinue() {
-    await this.clickElement(this.selectors.continueButton);
+    // Recommended: Using getByRole for button - accessible and clear
+    await this.page.getByRole('button', { name: 'Continue' }).click();
     await this.waitForPageLoad();
   }
 
