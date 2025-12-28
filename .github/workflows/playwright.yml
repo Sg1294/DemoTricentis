@@ -22,16 +22,19 @@ jobs:
       run: npx playwright install --with-deps
     - name: Verify test credentials are available
       run: |
+        echo "Checking environment variables..."
         if [ -z "$TEST_USER_EMAIL" ]; then
-          echo "WARNING: TEST_USER_EMAIL is not set"
+          echo "❌ WARNING: TEST_USER_EMAIL is not set"
         else
-          echo "TEST_USER_EMAIL is set"
+          echo "✅ TEST_USER_EMAIL is set (length: ${#TEST_USER_EMAIL})"
         fi
         if [ -z "$TEST_USER_PASSWORD" ]; then
-          echo "WARNING: TEST_USER_PASSWORD is not set"
+          echo "❌ WARNING: TEST_USER_PASSWORD is not set"
         else
-          echo "TEST_USER_PASSWORD is set"
+          echo "✅ TEST_USER_PASSWORD is set (length: ${#TEST_USER_PASSWORD})"
         fi
+        echo "All environment variables:"
+        env | grep TEST_ || echo "No TEST_ variables found"
       env:
         TEST_USER_EMAIL: ${{ secrets.USERNAME }}
         TEST_USER_PASSWORD: ${{ secrets.PASSWORD }}
