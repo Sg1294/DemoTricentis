@@ -108,7 +108,6 @@ class CheckoutPage extends BasePage {
       }
     }
 
-    // Recommended: Using getByLabel for form inputs - user-facing locators
     await this.page.getByLabel('First name:').first().fill(address.firstName);
     await this.page.getByLabel('Last name:').first().fill(address.lastName);
 
@@ -201,7 +200,6 @@ class CheckoutPage extends BasePage {
 
   async continueShippingAddress() {
     await this.clickElement(this.selectors.shippingContinueButton);
-    // Wait for one of the possible next steps
     await Promise.race([
       this.page.waitForSelector(this.selectors.shippingMethodRadio, { state: 'visible', timeout: 10000 }),
       this.page.waitForSelector(this.selectors.paymentMethodRadio, { state: 'visible', timeout: 10000 }),
@@ -233,7 +231,6 @@ class CheckoutPage extends BasePage {
   }
 
   async continueShippingMethod() {
-    // Recommended: Using getByRole with context for button
     const shippingMethodSection = this.page.locator('#shipping-method-buttons-container');
     await shippingMethodSection.getByRole('button', { name: /continue/i }).click();
     // Wait for payment method step to become visible
@@ -264,10 +261,8 @@ class CheckoutPage extends BasePage {
   }
 
   async continuePaymentMethod() {
-    // Recommended: Using getByRole with context for button
     const paymentMethodSection = this.page.locator('#payment-method-buttons-container');
     await paymentMethodSection.getByRole('button', { name: /continue/i }).click();
-    // Wait for payment info step to become visible
     await this.page.waitForSelector(this.selectors.paymentInfoStep, { state: 'visible', timeout: 10000 });
   }
 
@@ -293,15 +288,12 @@ class CheckoutPage extends BasePage {
   }
 
   async continuePaymentInfo() {
-    // Recommended: Using getByRole with context for button
     const paymentInfoSection = this.page.locator('#payment-info-buttons-container');
     await paymentInfoSection.getByRole('button', { name: /continue/i }).click();
-    // Wait for confirm order step to become visible
     await this.page.waitForSelector(this.selectors.confirmOrderStep, { state: 'visible', timeout: 10000 });
   }
 
   async confirmOrder() {
-    // Recommended: Using getByRole for button - accessible and clear
     await this.page.getByRole('button', { name: /confirm/i }).click();
     await this.waitForPageLoad();
   }
@@ -312,7 +304,6 @@ class CheckoutPage extends BasePage {
    */
   async isOrderConfirmed() {
     try {
-      // Recommended: Using getByText for content verification - more semantic
       const confirmationMessage = this.page.getByText(/your order has been successfully processed/i);
       await confirmationMessage.waitFor({ state: 'visible', timeout: 10000 });
       return true;
@@ -362,7 +353,6 @@ class CheckoutPage extends BasePage {
     paymentMethod = CheckoutPage.PAYMENT_METHODS.COD,
     paymentDetails = null
   ) {
-    // Validate required parameters
     if (!billingAddress) {
       throw new Error('Billing address is required for checkout');
     }

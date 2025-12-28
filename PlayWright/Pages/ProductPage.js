@@ -97,19 +97,15 @@ class ProductPage extends BasePage {
   }
 
   async setQuantity(quantity) {
-    // Recommended: Using getByLabel for form input - user-facing locator
     await this.page.getByLabel('Qty:').fill(quantity.toString());
   }
 
   async getQuantity() {
-    // Recommended: Using getByLabel for form input
     const value = await this.page.getByLabel('Qty:').inputValue();
     return parseInt(value, 10);
   }
 
   async addToCartFromDetailPage() {
-    // Recommended: Using getByRole scoped to product detail form to avoid matching related products
-    // This combines user-facing locator with necessary scoping for uniqueness
     const productDetailSection = this.page.locator('.product-essential');
     await productDetailSection.getByRole('button', { name: 'Add to cart' }).click();
     await this.waitForNotification();
@@ -122,14 +118,12 @@ class ProductPage extends BasePage {
 
   async closeNotification() {
     try {
-      // Recommended: Using getByLabel or getByRole for close button
       // Try multiple approaches as close buttons can have different ARIA labels
       const closeButton = this.page.locator('#bar-notification').getByRole('link', { name: 'close' });
       if (await closeButton.isVisible()) {
         await closeButton.click();
       }
     } catch (e) {
-      // Notification may have auto-closed
     }
   }
 

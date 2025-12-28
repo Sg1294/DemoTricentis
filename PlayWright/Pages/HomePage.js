@@ -53,17 +53,14 @@ class HomePage extends BasePage {
   }
 
   async clickLogin() {
-    // Recommended: Using user-facing locator instead of CSS class
     await this.page.getByRole('link', { name: 'Log in' }).click();
   }
 
   async clickRegister() {
-    // Recommended: Using user-facing locator instead of CSS class
     await this.page.getByRole('link', { name: 'Register' }).click();
   }
 
   async clickLogout() {
-    // Recommended: Using user-facing locator instead of CSS class
     await this.page.getByRole('link', { name: 'Log out' }).click();
   }
 
