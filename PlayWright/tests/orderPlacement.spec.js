@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { HomePage, LoginPage, RegisterPage, ProductPage, CartPage, CheckoutPage } = require('../Pages');
-const { loadTestData, generateUniqueEmail, comparePrices, roundToTwoDecimals, logStep, logAction, logAssertion } = require('../utils/helpers');
+const { loadTestData, generateUniqueEmail, comparePrices, roundToTwoDecimals, logStep, logAction, logAssertion } = require('../Utils/helpers');
 
 // Load test data
 const testData = loadTestData();
