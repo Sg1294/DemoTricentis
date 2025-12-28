@@ -24,7 +24,7 @@ module.exports = defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    headless: false,
+    headless: !!process.env.CI,
     viewport: { width: 1280, height: 720 },
     actionTimeout: 15000,
     navigationTimeout: 30000,
@@ -45,9 +45,8 @@ module.exports = defineConfig({
       name: 'firefox',
       use: {
         ...devices['Desktop Firefox'],
-        headless: true,  // Try headless mode for Firefox
         launchOptions: {
-          slowMo: 100,  // Slow down by 100ms
+          slowMo: 100,  // Slow down by 100ms for stability
         }
       },
     },
