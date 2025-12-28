@@ -266,7 +266,10 @@ test.describe('Place Order with Multiple Products', () => {
     const email = process.env.TEST_USER_EMAIL;
     const password = process.env.TEST_USER_PASSWORD;
 
-    test.skip(!email || !password, 'Test credentials not provided in environment variables');
+    console.log('TC005 Debug - Email exists:', !!email, 'Password exists:', !!password);
+    console.log('TC005 Debug - Email value:', email ? `${email.substring(0, 5)}...` : 'undefined');
+
+    test.skip(!email || !password || email.trim() === '' || password.trim() === '', 'Test credentials not provided in environment variables');
 
     await test.step('Login with existing user', async () => {
       await homePage.clickLogin();
