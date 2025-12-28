@@ -23,23 +23,43 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Debug - Check secret accessibility
+      run: |
+        echo "=== Secret Accessibility Debug ==="
+        echo "Event name: ${{ github.event_name }}"
+        echo "Repository: ${{ github.repository }}"
+        echo "Actor: ${{ github.actor }}"
+        echo "Ref: ${{ github.ref }}"
+        echo "Is fork: ${{ github.event.pull_request.head.repo.fork }}"
+        echo ""
+        echo "Secret checks:"
+        echo "USERNAME not empty: ${{ secrets.USERNAME != '' }}"
+        echo "PASSWORD not empty: ${{ secrets.PASSWORD != '' }}"
+        echo "=================================="
     - name: Verify test credentials are available
       run: |
         echo "Checking environment variables..."
-        echo "TEST_USER_EMAIL length: ${#TEST_USER_EMAIL}"
-        echo "TEST_USER_PASSWORD length: ${#TEST_USER_PASSWORD}"
+        echo "From job-level env:"
+        echo "  TEST_USER_EMAIL length: ${#TEST_USER_EMAIL}"
+        echo "  TEST_USER_PASSWORD length: ${#TEST_USER_PASSWORD}"
+        echo ""
+        echo "From step-level env (direct secret):"
+        echo "  DIRECT_EMAIL length: ${#DIRECT_EMAIL}"
+        echo "  DIRECT_PASS length: ${#DIRECT_PASS}"
+        echo ""
         if [ -z "$TEST_USER_EMAIL" ]; then
-          echo "❌ CRITICAL: TEST_USER_EMAIL is EMPTY or NOT SET"
-          echo "   This means secrets.USERNAME has no value in GitHub Secrets"
+          echo "❌ Job-level: TEST_USER_EMAIL is EMPTY"
         else
-          echo "✅ TEST_USER_EMAIL is set (length: ${#TEST_USER_EMAIL})"
+          echo "✅ Job-level: TEST_USER_EMAIL is set (length: ${#TEST_USER_EMAIL})"
         fi
-        if [ -z "$TEST_USER_PASSWORD" ]; then
-          echo "❌ CRITICAL: TEST_USER_PASSWORD is EMPTY or NOT SET"
-          echo "   This means secrets.PASSWORD has no value in GitHub Secrets"
+        if [ -z "$DIRECT_EMAIL" ]; then
+          echo "❌ Step-level: DIRECT_EMAIL is EMPTY"
         else
-          echo "✅ TEST_USER_PASSWORD is set (length: ${#TEST_USER_PASSWORD})"
+          echo "✅ Step-level: DIRECT_EMAIL is set (length: ${#DIRECT_EMAIL})"
         fi
+      env:
+        DIRECT_EMAIL: ${{ secrets.USERNAME }}
+        DIRECT_PASS: ${{ secrets.PASSWORD }}
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
